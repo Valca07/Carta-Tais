@@ -84,15 +84,28 @@
     const next=()=>{index=(index+1)%slides.children.length;update()};
     const prev=()=>{index=(index-1+slides.children.length)%slides.children.length;update()};
 
-    const openLetter=()=>{
-      const audio=document.getElementById('bgMusic');
-      if(audio){audio.currentTime=0;audio.volume=document.getElementById('volumeSlider').value;audio.play().catch(()=>{});}      
-      intro.classList.add('open');
-      setTimeout(()=>{intro.style.display='none';main.style.display='block'},600);
+const openLetter = (e) => {
+  const audio = document.getElementById('bgMusic');
+  const slider = document.getElementById('volumeSlider');
+
+  if (audio) {
+    audio.volume = slider ? slider.value : 0.7;
+    audio.currentTime = 0;
+    audio.play();
+  }
+
+  intro.classList.add('open');
+  setTimeout(() => {
+    intro.style.display = 'none';
+    main.style.display = 'block';
+  }, 600);
+};
+
     };
 
-    letterBtn.addEventListener('click',openLetter);
-    letterBtn.addEventListener('touchstart',e=>{e.preventDefault();openLetter()},{passive:false});
+letterBtn.addEventListener('click', openLetter);
+letterBtn.addEventListener('touchstart', openLetter, { passive: true });
+
     prevBtn.addEventListener('click',prev);
     nextBtn.addEventListener('click',next);
 
@@ -120,5 +133,6 @@
   </script>
 </body>
 </html>
+
 
 
