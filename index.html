@@ -3,20 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Carta para Tais💖</title>
+  <title>Carta para Tais 💖</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;600;700&display=swap');
     *{box-sizing:border-box;margin:0;padding:0}
     body{font-family:'Pixelify Sans',system-ui,sans-serif;background:#0f0f1a;color:#fff;overflow-x:hidden}
 
-    .intro{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(circle at center,#1b1b2f 0%,#0f0f1a 60%);z-index:999;transition:opacity .6s,transform .6s}
-    .intro.open{opacity:0;transform:scale(1.1);pointer-events:none}
-    .letter-img{width:70vw;max-width:260px;image-rendering:pixelated;cursor:pointer;animation:pulse 1.6s ease-in-out infinite;transition:transform .25s}
-    .letter-img:active{transform:scale(.95)}
-    .tap-text{margin-top:14px;font-size:1.05rem;font-weight:600;opacity:.9;animation:blink 1.8s ease-in-out infinite;letter-spacing:.3px}
+    .intro{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(circle at center,#1b1b2f 0%,#0f0f1a 60%);z-index:9999}
+    .letter-img{width:70vw;max-width:260px;image-rendering:pixelated;cursor:pointer;animation:pulse 1.6s ease-in-out infinite}
+    .tap-text{margin-top:14px;font-size:1.05rem;font-weight:600;opacity:.9;animation:blink 1.8s ease-in-out infinite}
 
     .container{max-width:420px;margin:auto;padding:20px;text-align:center;display:none}
-    h1{font-size:1.8rem;margin-bottom:15px;animation:fadeIn 2s ease;font-weight:700;letter-spacing:.5px}
+    h1{font-size:1.8rem;margin-bottom:15px;font-weight:700}
 
     .carousel{position:relative;width:100%;overflow:hidden;border-radius:12px;box-shadow:0 0 20px rgba(255,105,180,.3)}
     .slides{display:flex;transition:transform .5s ease-in-out}
@@ -25,26 +23,21 @@
 
     .controls{display:flex;justify-content:space-between;margin-top:10px}
     button{background:#ff69b4;border:none;padding:10px 16px;border-radius:8px;font-family:inherit;font-weight:700;cursor:pointer;color:#000}
-    button:hover{background:#ff85c1}
-
-    .float-img{position:fixed;pointer-events:none;animation:float 6s linear infinite;image-rendering:pixelated;background-size:contain;background-repeat:no-repeat;background-position:center;will-change:transform,opacity}
-
-    @keyframes float{from{transform:translate(-50%,100vh);opacity:1}to{transform:translate(-50%,-10vh);opacity:0}}
-    @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-    @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.05)}100%{transform:scale(1)}}
-    @keyframes blink{0%,100%{opacity:.4}50%{opacity:1}}
-    footer{margin-top:20px;font-size:.95rem;opacity:.85;font-weight:600}
-
-    .music-controls{margin-top:14px;display:flex;justify-content:center}
-    .play-btn{background:#ff69b4;border:none;padding:10px 18px;border-radius:10px;font-family:inherit;font-weight:700;color:#000;cursor:pointer}
-    .play-btn:active{transform:scale(.95)}
 
     .volume-box{display:flex;align-items:center;gap:10px;margin:16px auto 0;max-width:260px;justify-content:center}
-    .vol-icon{font-size:1.2rem}
     #volumeSlider{width:100%;height:8px;border-radius:8px;outline:none;accent-color:#ff69b4}
+
+    .float-img{position:fixed;pointer-events:none;animation:float 6s linear infinite;image-rendering:pixelated;background-size:contain;background-repeat:no-repeat;background-position:center}
+
+    @keyframes float{from{transform:translate(-50%,100vh);opacity:1}to{transform:translate(-50%,-10vh);opacity:0}}
+    @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.05)}100%{transform:scale(1)}}
+    @keyframes blink{0%,100%{opacity:.4}50%{opacity:1}}
+
+    footer{margin-top:20px;font-size:.95rem;opacity:.85;font-weight:600}
   </style>
 </head>
 <body>
+
   <div id="intro" class="intro">
     <img src="cartapixelart.png" alt="Abrir carta" class="letter-img" id="letterBtn" />
     <p class="tap-text">Tocá la carta para abrir 💌</p>
@@ -52,6 +45,7 @@
 
   <div class="container" id="mainContent">
     <h1>Un regalo hecho con todo mi corazón 💕</h1>
+
     <div class="carousel">
       <div class="slides" id="slides">
         <div class="slide"><img src="img1.png" alt=""></div>
@@ -59,92 +53,65 @@
         <div class="slide"><img src="img3.png" alt=""></div>
       </div>
     </div>
+
     <div class="controls">
       <button id="prevBtn">◀</button>
       <button id="nextBtn">▶</button>
     </div>
-    <div class="music-controls">
-      <button id="playBtn" class="play-btn">▶ Reproducir música</button>
+
+    <div class="volume-box">
+      <span>🔊</span>
+      <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.7" />
     </div>
-    <div class="volume-box" id="volumeBox">
-      <span class="vol-icon">🔊</span>
-      <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.7" /> 
-    </div>
-    <audio id="bgMusic" src="musica.mp3" preload="auto"></audio>
+
     <footer>Con amor, de Val ✨</footer>
   </div>
 
-  <script>
-    const intro=document.getElementById('intro');
-    const main=document.getElementById('mainContent');
-    const letterBtn=document.getElementById('letterBtn');
-    const slides=document.getElementById('slides');
-    const prevBtn=document.getElementById('prevBtn');
-    const nextBtn=document.getElementById('nextBtn');
-    const playBtn=document.getElementById('playBtn');
-    let index=0;
+  <audio id="bgMusic" src="musica.mp3" preload="auto"></audio>
 
-    const update=()=>slides.style.transform=`translateX(-${index*100}%)`;
-    const next=()=>{index=(index+1)%slides.children.length;update()};
-    const prev=()=>{index=(index-1+slides.children.length)%slides.children.length;update()};
+  <script>
+    var intro = document.getElementById('intro');
+    var main = document.getElementById('mainContent');
+    var letterBtn = document.getElementById('letterBtn');
+    var audio = document.getElementById('bgMusic');
+    var slider = document.getElementById('volumeSlider');
+
+    letterBtn.addEventListener('click', openLetter);
+    letterBtn.addEventListener('touchstart', function(e){ e.preventDefault(); openLetter(); });
 
     function openLetter(){
-      intro.classList.add('open');
-      setTimeout(()=>{
-        intro.style.display='none';
-        main.style.display='block';
-      },600);
+      intro.style.display = 'none';
+      main.style.display = 'block';
+      audio.currentTime = 0;
+      audio.volume = slider.value;
+      audio.play();
     }
 
-    // eventos carrusel
-    prevBtn.addEventListener('click',prev);
-    nextBtn.addEventListener('click',next);
+    var slides = document.getElementById('slides');
+    var prevBtn = document.getElementById('prevBtn');
+    var nextBtn = document.getElementById('nextBtn');
+    var index = 0;
 
-    const audioEl=document.getElementById('bgMusic');
-    const volumeSlider=document.getElementById('volumeSlider');
-    const playBtnEl=document.getElementById('playBtn');
+    function update(){ slides.style.transform = 'translateX(-' + (index*100) + '%)'; }
 
-    // seguridad: evitar errores si no existe
-    if(playBtnEl && audioEl){
-      playBtnEl.addEventListener('click',()=>{
-        audioEl.volume=volumeSlider?volumeSlider.value:0.7;
-        audioEl.play();
-      });
-    }
+    prevBtn.onclick = function(){ index = (index - 1 + slides.children.length) % slides.children.length; update(); };
+    nextBtn.onclick = function(){ index = (index + 1) % slides.children.length; update(); };
 
-    if(playBtnEl && audioEl){
-      playBtnEl.addEventListener('click',()=>{
-        audioEl.volume=volumeSlider?volumeSlider.value:0.7;
-        audioEl.play();
-      });
-    }
+    slider.oninput = function(){ audio.volume = this.value; };
 
-    if(volumeSlider && audioEl){
-      audioEl.volume=volumeSlider.value;
-      volumeSlider.addEventListener('input',()=>{audioEl.volume=volumeSlider.value;});
-    }
+    var FLOAT_IMAGES = ['imagenflotante1.png','imagenflotante2.png','imagenflotante3.png'];
 
-    const volumeSlider=document.getElementById('volumeSlider');
-    const audioEl=document.getElementById('bgMusic');
-    if(volumeSlider && audioEl){
-      audioEl.volume=volumeSlider.value;
-      volumeSlider.addEventListener('input',()=>{audioEl.volume=volumeSlider.value;});
-    });
-    }
-
-    const FLOAT_IMAGES=['imagenflotante1.png','imagenflotante2.png','imagenflotante3.png'];
-
-    setInterval(()=>{
-      const el=document.createElement('div');
-      el.className='float-img';
-      el.style.backgroundImage=`url(${FLOAT_IMAGES[Math.floor(Math.random()*FLOAT_IMAGES.length)]})`;
-      const spread=12,offset=(Math.random()*spread*2)-spread;
-      el.style.left=`calc(50vw + ${offset}vw)`;
-      const size=18+Math.random()*18;
-      el.style.width=size+'px';
-      el.style.height=size+'px';
+    setInterval(function(){
+      var el = document.createElement('div');
+      el.className = 'float-img';
+      el.style.backgroundImage = 'url(' + FLOAT_IMAGES[Math.floor(Math.random()*FLOAT_IMAGES.length)] + ')';
+      var offset = (Math.random()*24) - 12;
+      el.style.left = 'calc(50vw + ' + offset + 'vw)';
+      var size = 18 + Math.random()*18;
+      el.style.width = size + 'px';
+      el.style.height = size + 'px';
       document.body.appendChild(el);
-      setTimeout(()=>el.remove(),6000);
+      setTimeout(function(){ el.remove(); },6000);
     },900);
   </script>
 </body>
