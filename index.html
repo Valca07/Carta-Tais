@@ -75,6 +75,14 @@
     var letterBtn = document.getElementById('letterBtn');
     var audio = document.getElementById('bgMusic');
     var slider = document.getElementById('volumeSlider');
+    var hasPlayed = false;
+
+    function tryPlay(){
+      if(hasPlayed) return;
+      audio.currentTime = 0;
+      audio.volume = slider.value;
+      audio.play().then(function(){ hasPlayed = true; }).catch(function(){});
+    }
 
     letterBtn.addEventListener('click', openLetter);
     letterBtn.addEventListener('touchstart', function(e){ e.preventDefault(); openLetter(); });
@@ -82,10 +90,11 @@
     function openLetter(){
       intro.style.display = 'none';
       main.style.display = 'block';
-      audio.currentTime = 0;
-      audio.volume = slider.value;
-      audio.play();
+      tryPlay();
     }
+
+    document.addEventListener('touchstart', tryPlay, { once:true });
+    document.addEventListener('click', tryPlay, { once:true });
 
     var slides = document.getElementById('slides');
     var prevBtn = document.getElementById('prevBtn');
@@ -99,7 +108,7 @@
 
     slider.oninput = function(){ audio.volume = this.value; };
 
-    var FLOAT_IMAGES = ['imagenflotante1.png','imagenflotante2.png','imagenflotante3.png'];
+    var FLOAT_IMAGES = ['imagenflotante1.png','imagenflotante2.png','imagenflotante3.png']; = ['imagenflotante1.png','imagenflotante2.png','imagenflotante3.png'];
 
     setInterval(function(){
       var el = document.createElement('div');
@@ -116,6 +125,7 @@
   </script>
 </body>
 </html>
+
 
 
 
