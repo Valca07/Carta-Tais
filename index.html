@@ -67,7 +67,7 @@
     <footer>Con amor, de Val ✨</footer>
   </div>
 
-  <audio id="bgMusic" src="musica.mp3" preload="auto"></audio>
+  <audio id="bgMusic" src="musica.mp3" preload="auto" playsinline></audio>
 
   <script>
     var intro = document.getElementById('intro');
@@ -75,26 +75,37 @@
     var letterBtn = document.getElementById('letterBtn');
     var audio = document.getElementById('bgMusic');
     var slider = document.getElementById('volumeSlider');
-    var hasPlayed = false;
+    var unlocked = false;
 
-    function tryPlay(){
-      if(hasPlayed) return;
+    function unlockAudio(){
+      if(unlocked) return;
+      audio.muted = true;
+      audio.play().then(function(){
+        audio.pause();
+        audio.currentTime = 0;
+        audio.muted = false;
+        unlocked = true;
+      }).catch(function(){});
+    }
+
+    function playMusic(){
+      unlockAudio();
       audio.currentTime = 0;
       audio.volume = slider.value;
-      audio.play().then(function(){ hasPlayed = true; }).catch(function(){});
+      audio.play().catch(function(){});
     }
 
     letterBtn.addEventListener('click', openLetter);
-    letterBtn.addEventListener('touchstart', function(e){ e.preventDefault(); openLetter(); });
+    letterBtn.addEventListener('touchend', function(e){ e.preventDefault(); openLetter(); });
 
     function openLetter(){
       intro.style.display = 'none';
       main.style.display = 'block';
-      tryPlay();
+      playMusic();
     }
 
-    document.addEventListener('touchstart', tryPlay, { once:true });
-    document.addEventListener('click', tryPlay, { once:true });
+    document.addEventListener('touchend', function(){ playMusic(); }, { once:true });
+    document.addEventListener('click', function(){ playMusic(); }, { once:true });
 
     var slides = document.getElementById('slides');
     var prevBtn = document.getElementById('prevBtn');
@@ -108,9 +119,21 @@
 
     slider.oninput = function(){ audio.volume = this.value; };
 
-    var FLOAT_IMAGES = ['imagenflotante1.png','imagenflotante2.png','imagenflotante3.png']; = ['imagenflotante1.png','imagenflotante2.png','imagenflotante3.png'];
+    var FLOAT_IMAGES = ['imagenflotante1.png','imagenflotante2.png','imagenflotante3.png'];
 
     setInterval(function(){
+      var el = document.createElement('div');
+      el.className = 'float-img';
+      el.style.backgroundImage = 'url(' + FLOAT_IMAGES[Math.floor(Math.random()*FLOAT_IMAGES.length)] + ')';
+      var offset = (Math.random()*24) - 12;
+      el.style.left = 'calc(50vw + ' + offset + 'vw)';
+      var size = 18 + Math.random()*18;
+      el.style.width = size + 'px';
+      el.style.height = size + 'px';
+      document.body.appendChild(el);
+      setTimeout(function(){ el.remove(); },6000);
+    },900);
+(function(){
       var el = document.createElement('div');
       el.className = 'float-img';
       el.style.backgroundImage = 'url(' + FLOAT_IMAGES[Math.floor(Math.random()*FLOAT_IMAGES.length)] + ')';
@@ -125,7 +148,4 @@
   </script>
 </body>
 </html>
-
-
-
 
